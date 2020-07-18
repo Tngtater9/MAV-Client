@@ -16,6 +16,14 @@
     bottom: 0;
 }
 
+form {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1 !important;
+    padding: 6px;
+}
+
 .sidebarStyle {
     display: inline-block;
     position: absolute;
