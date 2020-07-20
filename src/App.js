@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import mapboxgl from 'mapbox-gl';
+import ReactMapGL from 'react-map-gl';
+
+function Map () {
+  const [viewport, setViewport] = useState({
+    longitude: -81.379234,
+    latitude: 28.538336,
+    width: '100vw',
+    height: '100vh',
+    zoom: 9
+  })
+  return (
+    <div>
+      <ReactMapGL {...viewport} mapboxToken={process.env.REACT_APP_MAPBOX_TOKEN}>
+        markers here
+      </ReactMapGL>
+    </div>
+  )
+}
+
 
 
 class App extends React.Component {
@@ -45,10 +63,9 @@ class App extends React.Component {
       <header className="App-header">
         <h1>MAV DEMO</h1>
       </header>
-      <div className='sidebarStyle'>
-        <div>Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom: {this.state.zoom}</div>
-      </div>
-      <div ref={el => this.mapContainer = el} className="mapContainer" />
+      <ReactMapGL>
+        markers here
+      </ReactMapGL>
       <form class="AVAST_PAM_nonloginform">
         <label forHTML="title">Title</label>
         <input type="text" placeholder="Title of appointment"/><br/>
@@ -69,4 +86,4 @@ class App extends React.Component {
   )}
 }
 
-export default App;
+export default Map;
