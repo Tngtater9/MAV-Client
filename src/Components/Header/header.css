@@ -1,0 +1,18 @@
+.hidden {
+    display: none;
+}
+
+.header {
+    font-size: 72px;
+    margin:0;
+    color: rgb(235, 0, 243);
+    background: rgba(253, 253, 253, 0.8);
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+}

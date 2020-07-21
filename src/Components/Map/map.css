@@ -1,0 +1,35 @@
+.date {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.date > input {
+    width: 25%;
+    padding: 0;
+}
+
+.mapContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.add-event {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1 !important;
+    padding: 6px;
+}
+
+.marker {
+    margin: 12px;
+    background-color: #404040;
+    color: #ffffff;
+    padding: 6px;
+    font-weight: bold;
+    border-radius: 100%;
+}
