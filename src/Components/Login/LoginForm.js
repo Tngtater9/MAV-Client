@@ -22,9 +22,9 @@ import TokenService from '../../services/TokenService'
 //     return (
 //         <form className="login-form" onSubmit={(ev) => handleSubmitBasicAuth(ev)}>
 //             <h1>Log In</h1>
-//             <label forHTML="username">Username</label>
+//             <label htmlFor="username">Username</label>
 //             <input id="username" name="username" type="text" placeholder="Username"/><br/>
-//             <label forHTML="password">Password</label>
+//             <label htmlFor="password">Password</label>
 //             <input id="password" name="password" type="password" placeholder="password"/><br/><br/>
 //             <button type="submit">Log In</button>
 //         </form>
@@ -53,9 +53,9 @@ class LoginForm extends Component {
         return (
             <form className="login-form" onSubmit={(ev) => this.handleSubmitBasicAuth(ev)}>
                 <h1>Log In</h1>
-                <label forHTML="username">Username</label>
+                <label htmlFor="username">Username</label>
                 <input id="username" name="username" type="text" placeholder="Username"/><br/>
-                <label forHTML="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input id="password" name="password" type="password" placeholder="password"/><br/><br/>
                 <button type="submit">Log In</button>
             </form>

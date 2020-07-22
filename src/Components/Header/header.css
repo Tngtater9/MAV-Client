@@ -1,3 +1,52 @@
+.App-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    z-index: 1 !important;
+}
+
+.App-header > h1 {
+    background-color: #FFF;
+}
+
+.App-header > h1, p {
+    padding: 0;
+    margin: 0;
+}
+
+.App-header > input {
+    height: 28px;
+}
+
+.date {
+    color: rgb(235, 0, 243);
+    font-weight: bold;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date > p {
+    color: rgb(235, 0, 243);
+    text-shadow: -1px 1px 0 #FFF,
+            1px 1px 0 #FFF,
+            1px -1px 0 #FFF,
+            -1px -1px 0 #FFF;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.date > input {
+    width: 25%;
+    padding: 0;
+}
+
 .hidden {
     display: none;
 }
@@ -6,6 +55,10 @@
     font-size: 72px;
     margin:0;
     color: rgb(235, 0, 243);
+    text-shadow: -1px 1px 0 #FFF,
+            1px 1px 0 #FFF,
+            1px -1px 0 #FFF,
+            -1px -1px 0 #FFF;
     background: rgba(253, 253, 253, 0.8);
     border: none;
     cursor: pointer;

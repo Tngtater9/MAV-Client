@@ -1,0 +1,21 @@
+.event {
+    color: rgb(235, 0, 243);
+    font-weight: bold;
+    text-shadow: -1px 1px 0 #FFF,
+                1px 1px 0 #FFF,
+                1px -1px 0 #FFF,
+                -1px -1px 0 #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1 !important;
+    padding: 6px;
+}
+
+.event ::placeholder {
+    color: #000;
+}

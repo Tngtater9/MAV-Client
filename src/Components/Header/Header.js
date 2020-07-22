@@ -19,7 +19,7 @@ export default class Header extends Component {
     return (
       <header className="App-header">
         <div>
-          <button onClick={this.Toggle}  className="header">MAV</button>
+          <button onClick={this.Toggle} className="header">MAV</button>
           <nav className={this.state.toggle ? "nav-links" : "hidden"}>
             <p>{this.props.username}</p>
             <Link to="/">About</Link>

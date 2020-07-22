@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './map.css';
 import ReactMapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
-import AddEvent from '../AddEvent'
+import EventsSection from '../../Routes/Events/EventsSection'
 import PLACES from '../../sample-locations'
 
 function Map () {
@@ -81,7 +81,7 @@ function Map () {
           showZoom={true} />
         </div>
       </ReactMapGL>
-      <AddEvent/>
+      <EventsSection/>
     </div>
   )
 }
