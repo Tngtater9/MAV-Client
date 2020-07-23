@@ -11,6 +11,8 @@ function SignUp () {
             <input id="email" name="email" type="email" required/><br/>
             <label htmlFor="company">Company</label>
             <input id="company" name="company" type="text"/><br/>
+            <label htmlFor="timezone">Timezone</label>
+            <input id="timezone" name="timezone" type="text"/><br/>
             <label htmlFor="username">Username</label>
             <input id="username" name="username" type="text" required/><br/>
             <label htmlFor="password">Password</label>

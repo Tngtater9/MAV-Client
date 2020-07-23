@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { BrowserRouter, Switch, Route, useRouteMatch } from 'react-router-dom'
 import './map.css';
 import ReactMapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
-import EventsSection from '../../Routes/Events/EventsSection'
-import PLACES from '../../sample-locations'
+import AddEvent from '../AddEvent/AddEvent'
+import SearchAdd from '../AddEvent/SearchAdd'
+import UpdateEvent from '../Update/UpdateEvent'
+import Details from '../Details/Details'
+import { EventContext } from '../../Context/EventContext';
+import DateContextProvider from '../../Context/DateContext'
 
 function Map () {
   // const [viewport, setViewport] = useState({
@@ -21,7 +26,7 @@ function Map () {
     zoom: 2
   })
 
-  const [selected, setSelected] = useState(null)
+  const { events, selected, setSelected } = useContext(EventContext)
 
   useEffect(() => {
     const listener = e => {
@@ -38,51 +43,63 @@ function Map () {
   }, [])
 
   useEffect(()=>{
-    if(PLACES[0]){
-      setViewport({...viewport, longitude: PLACES[0].longitude,
-      latitude: PLACES[0].latitude, zoom: 10})
+    if(events[0]){
+      setViewport({...viewport, longitude: events[0].longitude,
+      latitude: events[0].latitude, zoom: 10})
     }
   }, [])
-  return (
-    <div>
-      <ReactMapGL 
-      {...viewport} 
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle='mapbox://styles/mapbox/streets-v11'
-      onViewportChange={(viewport)=>{setViewport(viewport)}}>
-        
-        {PLACES.map((place, index) => (
-          <Marker key={place.id} 
-          latitude={place.latitude} 
-          longitude={place.longitude}
-          >
-            <button className="marker" onClick={(e) => {
-              e.preventDefault();
-              setSelected(place)
-            }}>
-            {index + 1}
-            </button>
-          </Marker>
-        ))}
 
-        {selected && (
-          <Popup 
-          latitude={selected.latitude} 
-          longitude={selected.longitude}
-          onClose={() => setSelected(null)}>
-            <div>
-              {selected.address}
-            </div>
-          </Popup>
-        )}
-        <div style={{position: 'absolute', left: 0, bottom: 40}}>
-          <NavigationControl
-          showCompass={true}
-          showZoom={true} />
-        </div>
-      </ReactMapGL>
-      <EventsSection/>
-    </div>
+  let { path } = useRouteMatch();
+
+  return (
+    <BrowserRouter>
+      <div>
+        <ReactMapGL 
+        {...viewport} 
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        mapStyle='mapbox://styles/mapbox/streets-v11'
+        onViewportChange={(viewport)=>{setViewport(viewport)}}>
+          
+          {events.map((place, index) => (
+            <Marker key={place.id} 
+            latitude={place.latitude} 
+            longitude={place.longitude}
+            >
+              <button className="marker" onClick={(e) => {
+                e.preventDefault();
+                setSelected(place)
+              }}>
+              {index + 1}
+              </button>
+            </Marker>
+          ))}
+
+          {selected && (
+            <Popup 
+            latitude={selected.latitude} 
+            longitude={selected.longitude}
+            onClose={() => setSelected(null)}>
+              <div>
+                {selected.address}
+              </div>
+            </Popup>
+          )}
+          <div style={{position: 'absolute', left: 0, bottom: 40}}>
+            <NavigationControl
+            showCompass={true}
+            showZoom={true} />
+          </div>
+        </ReactMapGL>
+        <Switch>
+          <DateContextProvider>
+            <Route exact path={path} component={SearchAdd}/>
+            <Route path={`${path}/add`} component={AddEvent}/>
+            <Route path={`${path}/update/:eventId`} component={UpdateEvent}/>
+            <Route path={`${path}/:eventId`} component={Details}/>
+          </DateContextProvider>
+        </Switch>
+      </div>
+    </BrowserRouter>
   )
 }
 
