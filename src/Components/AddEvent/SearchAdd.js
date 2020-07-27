@@ -48,7 +48,7 @@ function Search () {
     }
 
     return (
-        <div onMouseLeave={() => setToggle(!toggle)}>
+        <div>
             {toggle ?
             (<form className="address" >
                 <label htmlFor="address">Enter address</label>
