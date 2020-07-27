@@ -15,6 +15,7 @@ function Map () {
   const { date } = useContext(DateContext)
   const div = document.createElement("div")
   const mapContainer = useRef(div)
+  let { path, url } = useRouteMatch();
 
   const [viewport, setViewport] = useState({
     longitude: events[0] ? events[0].longitude : 0,
@@ -107,21 +108,19 @@ function Map () {
       new mapboxgl.Marker({element:btn})
       .setLngLat([event.longitude, event.latitude])
       .setPopup(new mapboxgl.Popup().setHTML(`<div><h1>${event.title}</h1><br/>
-      <p>${event.address}</p><br/><a href="http://localhost:3000/map/event/${event.eventId}">Details...<a></div>`))
+      <p>${event.address}</p><br/><a href="${url}/event/${event.eventId}">Details...<a></div>`))
       .addTo(map))} else {
         return(
           new mapboxgl.Marker({element:btn})
         .setLngLat([Number(event.longitude), Number(event.latitude)])
         .setPopup(new mapboxgl.Popup().setHTML(`<div><h1>${event.address}</h1><br/>
-        <br/><a href="http://localhost:3000/map/">Change address<a></div>`))
+        <br/><a href="${url}/">Change address<a></div>`))
         .addTo(map)
         )}
       })
     }
     
   }, [selectedEvents, newEvent])
-
-  let { path } = useRouteMatch();
 
   return (
     <BrowserRouter>
