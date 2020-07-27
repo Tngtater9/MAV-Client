@@ -4,6 +4,7 @@
     right: 0;
     left: 0;
     bottom: 0;
+    overflow: hidden;
 }
 
 .marker {
@@ -13,4 +14,18 @@
     padding: 6px;
     font-weight: bold;
     border-radius: 100%;
+    cursor: pointer;
 }
+
+.sidebarStyle {
+    display: inline-block;
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    margin: 12px;
+    background-color: #404040;
+    color: #ffffff;
+    z-index: 1 !important;
+    padding: 6px;
+    font-weight: bold;
+    }

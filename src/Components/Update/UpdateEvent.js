@@ -1,9 +1,19 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import './UpdateEvent.css'
 
 function UpdateEvent () {
+    const history = useHistory()
     let { eventId } = useParams();
+
+    const onUpdate = () => {
+        //patch to server
+        history.push(`/map/event/${eventId}`)
+    }
+
+    const declineUpdate = () => {
+        history.goBack()
+    }
     
     return (
         <form className="event">
@@ -22,8 +32,8 @@ function UpdateEvent () {
             <label htmlFor="description">Description</label>
             <textarea id="description" name="description" placeholder="Appointment Description"></textarea><br/>
             <div>
-                <button type="submit">Check</button>
-                <button type="button">X</button><br/><br/>
+                <button type="submit" onClick={() => onUpdate()}>Check</button>
+                <button type="button" onClick={() => declineUpdate()}>X</button><br/><br/>
             </div>
         </form>
     )

@@ -1,7 +1,4 @@
 .App-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
     width: 100%;
     position: absolute;
     top: 0;
@@ -12,6 +9,7 @@
 
 .App-header > h1 {
     background-color: #FFF;
+    cursor: pointer;
 }
 
 .App-header > h1, p {
@@ -26,9 +24,9 @@
 .date {
     color: rgb(235, 0, 243);
     font-weight: bold;
-    width: 50%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -39,12 +37,18 @@
             1px -1px 0 #FFF,
             -1px -1px 0 #FFF;
     font-weight: bold;
-    font-size: 32px;
+    font-size: 18px;
 }
 
-.date > input {
-    width: 25%;
+.date-ctrl > input {
+    width: 100%;
     padding: 0;
+    cursor: pointer;
+}
+
+.date-ctrl {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .hidden {
@@ -66,6 +70,8 @@
 }
 
 .nav-links {
+    background-color: #FFF;
     display: flex;
     flex-direction: column;
+    z-index: 1 !important;
 }

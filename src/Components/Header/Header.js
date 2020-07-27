@@ -1,79 +1,90 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, Switch, Route, useHistory } from 'react-router-dom'
 import './header.css'
 import TokenService from '../../services/TokenService'
 import { UserContext } from '../../Context/UserContext'
 import { DateContext } from '../../Context/DateContext'
 
-// export default class Header extends Component {
-//   state = {
-//       toggle:false,
-//       date:null
-//   }
-//   Toggle = () => {
-//       this.setState({...this.state, toggle:!this.state.toggle})
-//   }
-
-//   handleLogoutClick = () => {
-//     TokenService.clearAuthToken()
-//   }
-//   render() {
-//     return (
-//       <header className="App-header">
-//         <div>
-//           <button onClick={this.Toggle} className="header">MAV</button>
-//           <nav className={this.state.toggle ? "nav-links" : "hidden"}>
-//             <p>{this.props.username}</p>
-//             <Link to="/">About</Link>
-//             <Link onClick={() => this.handleLogoutClick()} to='/'>Logout</Link>
-//           </nav>
-//         </div>
-//         {TokenService.hasAuthToken() ? (
-//           <div className="date">
-//             <p>{this.state.date}</p>
-//             <input type="date" className="date" onChange={(e) => {this.setState({...this.state, date: e.target.value})}}/>
-//           </div>
-//         ) : (
-//           <div className="login">
-//             <Link to="/signup">Sign Up</Link>
-//             <Link to="/login">Log in</Link>
-//           </div>
-//         )}
-//       </header>
-//       );
-//   }
-// }
-
 function handleLogoutClick  () {
     TokenService.clearAuthToken()
+}
+
+function formatDate (date) {
+  const result = []
+  const separate = date.split('-')
+  
+  const month = separate[1]
+  const day = separate[2]
+  const year = separate[0]
+  result.push(month)
+  result.push('/')
+  result.push(day)
+  result.push('/')
+  result.push(year)
+  result.join()
+  
+  return result
 }
 
 const Header = () => {
   const {user} = useContext(UserContext)
   const {date, setDate} = useContext(DateContext)
   const [toggle, setToggle] = useState(false)
+  const history = useHistory()
   
   return (
     <header className="App-header">
       <div>
         <button onClick={() => setToggle(!toggle)} className="header">MAV</button>
-        <nav className={toggle ? "nav-links" : "hidden"}>
-          <p>{user}</p>
+        {TokenService.hasAuthToken() ? (
+          <nav className={toggle ? "nav-links" : "hidden"}>
           <Link to="/">About</Link>
+          <Link to="/map" onClick={() => {history.push('/map')
+            window.location.reload(false)}}>Hello, {user}</Link>  
           <Link onClick={() => handleLogoutClick()} to='/'>Logout</Link>
-        </nav>
+          </nav>
+          ): null}
       </div>
-      {TokenService.hasAuthToken() ? (
-        <div className="date">
-          <p>{date}</p>
-          <input type="date" className="date" onChange={(e) => setDate(e.target.value)}/>
-        </div>
-      ) : (
-        <div className="login">
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/login">Log in</Link>
-        </div>
-      )}
+        <Switch>
+          <Route exact path="/">
+          {TokenService.hasAuthToken() ? (
+          <Link to="/map">Go to viewer</Link>
+          ) : (
+            <div className="login">
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log in</Link>
+            </div>
+          )}
+          </Route>
+          <Route path="/map">
+            <form className="date">
+              <p>{date}</p>
+              <div className="date-ctrl">
+                <input type="date" className="date" onChange={(e) => setDate(formatDate(e.target.value).join(''))}/>
+              </div>
+            </form>
+          </Route>
+          <Route path="/signup">
+          {TokenService.hasAuthToken() ? (
+          <Link to="/map">`Hello, ${user}`</Link>
+          ) : (
+            <div className="login">
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log in</Link>
+            </div>
+          )}
+          </Route>
+          <Route path="/login">
+          {TokenService.hasAuthToken() ? (
+          <Link to="/map">`Hello, ${user}`</Link>
+          ) : (
+            <div className="login">
+              <Link to="/signup">Sign Up</Link>
+              <Link to="/login">Log in</Link>
+            </div>
+          )}
+          </Route>
+        </Switch>
     </header>
   );
   
