@@ -29,7 +29,7 @@ function Search () {
             userId: user,
             companyId: company}
 
-            let uri = `http://api.positionstack.com/v1/forward?access_key=3b8bb0a44ed4226e01239f1f1e0648b7&limit=1&query=${address}&output=json`
+            let uri = `https://api.positionstack.com/v1/forward?access_key=3b8bb0a44ed4226e01239f1f1e0648b7&limit=1&query=${address}&output=json`
 
         fetch(uri)
             .then(response => response.json())
