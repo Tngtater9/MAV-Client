@@ -2,10 +2,14 @@ import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import './AddEvent.css'
 import { EventContext } from '../../Context/EventContext'
+import { DateContext } from '../../Context/DateContext'
+import ApptApiService from '../../services/ApptApiService'
+import moment from 'moment-with-locales-es6'
 
-function AddEvent () {
+function AddEvent (props) {
     const history = useHistory()
     const { events, setEvents, newEvent, setNewEvent } = useContext(EventContext)
+    const { setDate } = useContext(DateContext)
 
     const cancelAdd = (e) => {
         e.preventDefault()
@@ -16,29 +20,35 @@ function AddEvent () {
     const handleAdd = (e) => {
         e.preventDefault()
         console.log(e.target)
-        const { title, startTime, endTime, description } = e.target.parentNode.parentNode
+        const { title, start_time, end_time, description } = e.target.parentNode.parentNode
 
-        setEvents([...events,{
+        ApptApiService.postAppt({
             ...newEvent,
-            eventId: events.length + 1,
             title: title.value, 
-            startTime: startTime.value, 
-            endTime: endTime.value, 
-            description: description.value,
-        }])
-        //post to server
-        history.push('/map')
-        window.location.reload(false)
+            start_time: start_time.value, 
+            end_time: end_time.value, 
+            description: description.value
+        })
+            .then(newAppt => {
+                setEvents(...events, newAppt)
+                setNewEvent(null)
+                history.push('/map')
+                window.location.reload(false)
+                const apptDate = new Date(newAppt.start_time)
+                const showDate = moment(apptDate).format('L')
+                setDate(showDate)
+                props.changeViewport({...props.currentViewport, longitude: newAppt.longitude, latitude: newAppt.latitude})
+            }) 
     }
 
     return (
         <form className="event">
             <label htmlFor="title">Title</label>
             <input type="text" id="title" name="title" placeholder="Title of appointment" required/><br/>
-            <label htmlFor="startTime">Start</label>
-            <input type="datetime-local" id="startTime" name="startTime" placeholder="Appointment Start Time" required/><br/>
-            <label htmlFor="endTime">End</label>
-            <input type="datetime-local" id="endTime" name="endTime" placeholder="Appointment End Time"/><br/>
+            <label htmlFor="start_time">Start</label>
+            <input type="datetime-local" id="start_time" name="start_time" placeholder="Appointment Start Time" required/><br/>
+            <label htmlFor="end_time">End</label>
+            <input type="datetime-local" id="end_time" name="end_time" placeholder="Appointment End Time"/><br/>
             <label htmlFor="description">Description</label>
             <textarea id="description" name="description" placeholder="Appointment Description"></textarea><br/>
             <div>

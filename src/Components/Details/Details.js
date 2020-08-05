@@ -32,9 +32,9 @@ function Details () {
                 <h1>{selected.title}</h1>
                 <p>{selected.address}</p>
                 <p>{selected.startDate}</p>
-                <p>{selected.startTime}</p>
+                <p>{selected.start_time}</p>
                 <p>{selected.endDate}</p>
-                <p>{selected.endTime}</p>
+                <p>{selected.end_time}</p>
                 <p>{selected.description}</p>
             <div>
                 <button onClick={() => toDeleteEvent()}>Delete</button>

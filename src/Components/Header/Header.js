@@ -60,7 +60,8 @@ const Header = () => {
             <form className="date">
               <p>{date}</p>
               <div className="date-ctrl">
-                <input type="date" className="date" onChange={(e) => setDate(formatDate(e.target.value).join(''))}/>
+                <label htmlFor="date">Enter date to view:</label>
+                <input type="date" id="date" name="date" className="date" onChange={(e) => setDate(formatDate(e.target.value).join(''))}/>
               </div>
             </form>
           </Route>

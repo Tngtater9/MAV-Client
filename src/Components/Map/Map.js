@@ -9,6 +9,7 @@ import Details from '../Details/Details'
 import Confirmation from '../Details/Confirmation'
 import { EventContext } from '../../Context/EventContext'
 import { DateContext } from '../../Context/DateContext'
+import ApptApiService from '../../services/ApptApiService'
 
 function Map () {
   const { events,  newEvent, selectedEvents, setSelectedEvents } = useContext(EventContext)
@@ -44,15 +45,10 @@ function Map () {
 
   useEffect(()=>{
     const unformatted = unformatDate(date).join('')
-    let pickedEvents = events.map((e) => e.startTime.includes(unformatted) ? e : '').filter(String)
-
-    pickedEvents = pickedEvents.sort((a, b) => {
-
-        return  new Date(a.startTime) - new Date(b.startTime)
-    })
-
-    setSelectedEvents(pickedEvents)
-  },[date,events])
+    
+    ApptApiService.getApptByDate(unformatted)
+      .then(appts => setSelectedEvents(appts))
+  },[date])
 
   useEffect(() => {
     if(newEvent !== null && newEvent.hasOwnProperty('longitude') && newEvent.hasOwnProperty('latitude')){
@@ -64,12 +60,6 @@ function Map () {
     zoom: 10,
   })}
 },[newEvent])
-
-  // useEffect(() => {
-  //   if(newEvent !== null && newEvent.hasOwnProperty('title') && newEvent.title !== ''){
-  //     setEvents([...events, newEvent])
-  //     setNewEvent(null)}
-  // },[newEvent])
 
   useEffect(()=>{   
     
@@ -90,7 +80,7 @@ function Map () {
       setViewport({...viewport, zoom: map.getZoom().toFixed(2)})
     });
 
-    const pickedEvents = (selectedEvents !== null) ? [...selectedEvents] : [...events]
+    const pickedEvents = (selectedEvents !== null) ? [...selectedEvents] : []
 
     if(newEvent !== null && newEvent.hasOwnProperty('longitude') && newEvent.hasOwnProperty('latitude')) {pickedEvents.push(newEvent)}
     
@@ -128,7 +118,9 @@ function Map () {
         <div ref={mapContainer} className="mapContainer">
           <Switch>
               <Route exact path={path} component={SearchAdd}/>
-              <Route path={`${path}/add`} component={AddEvent}/>
+              <Route path={`${path}/add`}>
+                <AddEvent changeViewport={setViewport} currentViewport={viewport}/>
+              </Route>
               <Route path={`${path}/update/:eventId`} component={UpdateEvent}/>
               <Route path={`${path}/event/:eventId`} component={Details}/>
               <Route path={`${path}/delete/:eventId`} component={Confirmation}/>

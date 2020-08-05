@@ -7,7 +7,7 @@ import { UserContext } from '../../Context/UserContext'
 function Search () {
     const [toggle, setToggle] = useState(false)
     const { setNewEvent } = useContext(EventContext)
-    const { user, company } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     const history = useHistory()
 
@@ -23,13 +23,13 @@ function Search () {
             latitude: null,
             address: address,
             title: '', 
-            startTime: '', 
-            endTime: '', 
+            start_time: '', 
+            end_time: '', 
             description: '',
             userId: user,
-            companyId: company}
+            }
 
-            let uri = `https://api.positionstack.com/v1/forward?access_key=3b8bb0a44ed4226e01239f1f1e0648b7&limit=1&query=${address}&output=json`
+            let uri = `https://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_POSITIONSTACK_KEY}&limit=1&query=${address}&output=json`
 
         fetch(uri)
             .then(response => response.json())

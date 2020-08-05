@@ -21,14 +21,10 @@ function UpdateEvent () {
             <input type="text" placeholder="Title of appointment"/><br/>
             <label htmlFor="address">Address</label>
             <input type="text" placeholder="Address of appointment"/><br/>
-            <label htmlFor="startDate">Start Date</label>
-            <input type="text" id="startDate" name="startDate" placeholder="Appointment Start Date" onFocus="(this.type='date')"/><br/>
-            <label htmlFor="startTime">Start Time</label>
-            <input type="text" id="startTime" name="startTime" placeholder="Appointment Start Time" onFocus="(this.type='time')"/><br/>
-            <label htmlFor="endDate">End Date</label>
-            <input type="text" id="endDate" name="endDate" placeholder="Appointment End Date" onFocus="(this.type='date')"/><br/>
-            <label htmlFor="endTime">End Time</label>
-            <input type="text" id="endTime" name="endTime" placeholder="Appointment End Time" onFocus="(this.type='time')"/><br/>
+            <label htmlFor="start_time">Start</label>
+            <input type="datetime-local" id="start_time" name="start_time" placeholder="Appointment Start Time" required/><br/>
+            <label htmlFor="end_time">End</label>
+            <input type="datetime-local" id="end_time" name="end_time" placeholder="Appointment End Time"/><br/>
             <label htmlFor="description">Description</label>
             <textarea id="description" name="description" placeholder="Appointment Description"></textarea><br/>
             <div>
