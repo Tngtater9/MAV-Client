@@ -4,6 +4,10 @@ import { EventContext } from '../../Context/EventContext'
 import { DateContext } from '../../Context/DateContext'
 import ApptApiService from '../../services/ApptApiService'
 import './Details.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 function Details () {
   const { setSelectedEvents, setEvents, selected, setSelected } = useContext(
@@ -55,7 +59,7 @@ function Details () {
     <div>
       {selected ? (
         <section className='details'>
-          <button onClick={() => closeDetails()}>X</button>
+          <button className="btn" onClick={() => closeDetails()}><FontAwesomeIcon icon={faTimesCircle} /></button>
           <div>
             <h1>{selected.title}</h1>
             <p>
@@ -80,8 +84,8 @@ function Details () {
             )}
           </div>
           <div>
-            <button onClick={() => toDeleteEvent()}>Delete</button>
-            <button onClick={() => toEditDetails()}>Edit</button>
+            <button className="btn" onClick={() => toDeleteEvent()}><FontAwesomeIcon icon={faTrashAlt} /></button>
+            <button className="btn" onClick={() => toEditDetails()}><FontAwesomeIcon icon={faEdit} /></button>
           </div>
         </section>
       ) : null}

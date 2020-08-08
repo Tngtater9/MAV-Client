@@ -1,5 +1,6 @@
 .details, article {
-    background-color: rgb(255, 255, 255);
+    color: #FFF;
+    background-color: rgba(31, 31, 31, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,4 +12,11 @@
     width: fit-content;
     height: max-content;
     padding: 6px;
+}
+
+.btn {
+    font-size: 28px;
+    background-color: rgb(31,31,31);
+    color: rgb(110, 0, 161);
+    border-color: #FFF;
 }

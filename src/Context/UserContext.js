@@ -4,9 +4,9 @@ export const UserContext = createContext()
 
 function UserContextProvider (props) {
     const [user, setUser] = useState(null)
-    const [userError, setUserError] = useState(null)
+    
     return(
-        <UserContext.Provider value={{user, setUser, userError, setUserError}}>
+        <UserContext.Provider value={{user, setUser}}>
             {props.children}
         </UserContext.Provider>
     )

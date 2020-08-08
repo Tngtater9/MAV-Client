@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import './UpdateEvent.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { EventContext } from '../../Context/EventContext'
 import { DateContext } from '../../Context/DateContext'
 import ApptApiService from '../../services/ApptApiService'
@@ -132,7 +135,7 @@ function UpdateEvent () {
           history.push(`/map/event/${eventId}`)
         })
         .catch(err => {
-          setError(err.message)
+          setError({error: err.error})
         })
     } else {
       ApptApiService.updateAppt(eventId, appt)
@@ -151,7 +154,7 @@ function UpdateEvent () {
           history.push(`/map/event/${eventId}`)
         })
         .catch(err => {
-          setError(err.message)
+          setError({error: err.error})
         })
     }
   }
@@ -163,7 +166,7 @@ function UpdateEvent () {
   return (
     <form id='updateForm' name='updateForm' className='event'>
       <h2>Update Form</h2>
-      {error && <p>{error}</p>}
+      {error && <p>{error.error}</p>}
       <label htmlFor='title'>Title</label>
       <input
         type='text'
@@ -215,11 +218,11 @@ function UpdateEvent () {
       ></textarea>
       <br />
       <div>
-        <button type='submit' onClick={e => onUpdate(e)}>
-          Check
+        <button className="btn" type='submit' onClick={e => onUpdate(e)}>
+          <FontAwesomeIcon icon={faCheck} />
         </button>
-        <button type='button' onClick={() => declineUpdate()}>
-          X
+        <button className="btn" type='button' onClick={() => declineUpdate()}>
+        <FontAwesomeIcon icon={faTimes} />
         </button>
         <br />
         <br />

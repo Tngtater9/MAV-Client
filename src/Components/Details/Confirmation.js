@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import './Details.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { EventContext } from '../../Context/EventContext'
 import { DateContext } from '../../Context/DateContext'
 import ApptApiService from '../../services/ApptApiService'
@@ -50,8 +53,8 @@ function Confirmation () {
     <article>
       <p>Are you sure?</p>
       <div>
-        <button onClick={() => acceptDelete()}>Check</button>
-        <button onClick={() => declineDelete()}>X</button>
+        <button className="btn" onClick={() => acceptDelete()}><FontAwesomeIcon icon={faCheck} /></button>
+        <button className="btn" onClick={() => declineDelete()}><FontAwesomeIcon icon={faTimes} /></button>
       </div>
     </article>
   )

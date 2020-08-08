@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import './AddEvent.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { EventContext } from '../../Context/EventContext'
 import { UserContext } from '../../Context/UserContext'
 
@@ -16,10 +18,15 @@ function Search () {
   const handleSearch = e => {
     e.persist()
 
-    let address = e.target.parentNode.address.value
+    const addAddress = document.getElementById('addAddress')
+    let formData = new FormData(addAddress)
 
-    if (address) {
-      let newEvent = {
+    let address = formData.get('address')
+
+    let newEvent = {}
+
+    if (address !== '') {
+      newEvent = {
         longitude: null,
         latitude: null,
         address: address,
@@ -29,7 +36,7 @@ function Search () {
         description: '',
         userId: user
       }
-
+      
       let uri = `https://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_POSITIONSTACK_KEY}&limit=1&query=${address}&output=json`
 
       fetch(uri)
@@ -43,7 +50,7 @@ function Search () {
           setNewEvent(newEvent)
           history.push('/map/add')
         })
-        .catch(err => setError(err))
+        .catch(err => setError({error: err.error}))
     } else {
       e.preventDefault()
     }
@@ -52,8 +59,8 @@ function Search () {
   return (
     <div>
       {toggle ? (
-        <form className='address'>
-          {error && <p>{error}</p>}
+        <form id="addAddress" name="addAddress" className='address'>
+          {error && <p>{error.error}</p>}
           <label htmlFor='address'>Enter address</label>
           <input
             type='text'
@@ -64,8 +71,8 @@ function Search () {
             autoFocus={true}
             placeholder='123 Main St Suite 101, Orlando, Fl 32825'
           />
-          <button type='button' onClick={e => handleSearch(e)}>
-            Search
+          <button type='button' className="search-btn" onClick={e => handleSearch(e)}>
+            <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
       ) : (

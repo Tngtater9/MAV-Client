@@ -1,16 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import './login.css'
-import { UserContext } from '../../Context/UserContext'
 import TokenService from '../../services/TokenService'
 import AuthApiService from '../../services/AuthApiService'
 
 function LoginForm (props) {
   
-  const { userError, setUserError } = useContext(UserContext)
+  const [error, setError] = useState(null)
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
-    setUserError({ error: null })
+    setError({ error: null })
     const { username, password } = ev.target
 
     AuthApiService.postLogin({
@@ -22,9 +21,9 @@ function LoginForm (props) {
         password.value = ''
         TokenService.saveAuthToken(res.authToken)
       })
-      .then(res => props.onLoginSuccess())
+      .then(() => props.onLoginSuccess())
       .catch(res => {
-        setUserError({ error: res.error })
+        setError({ error: res.error })
       })
   }
 
@@ -33,7 +32,7 @@ function LoginForm (props) {
       handleSubmit(ev)
       }>
       <h1>Log In</h1>
-      {userError && (<p className="error">{userError.error}</p>)}
+      {error && (<p className="error">{error.error}</p>)}
       <label htmlFor="username">Username</label>
       <input id="username" name="username" type="text" placeholder="Username"/><br/>
       <label htmlFor="password">Password</label>

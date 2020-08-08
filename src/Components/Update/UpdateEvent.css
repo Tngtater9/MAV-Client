@@ -18,3 +18,10 @@
 .event ::placeholder {
     color: #000;
 }
+
+.btn {
+    font-size: 28px;
+    background-color: rgb(31,31,31);
+    color: rgb(110, 0, 161);
+    border-color: #FFF;
+}

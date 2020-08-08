@@ -1,6 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import './AddEvent.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { EventContext } from '../../Context/EventContext'
 import { DateContext } from '../../Context/DateContext'
 import ApptApiService from '../../services/ApptApiService'
@@ -45,11 +48,11 @@ function AddEvent (props) {
     const newEnd = new Date(appt.end_time)
     appt.end_time = newEnd
 
-      appt = {
+    appt = {
       ...newEvent,
       ...appt
     }
-    if(appt.title === '' || appt.start_time === ''){
+    if (appt.title === '' || appt.start_time === '') {
       return setError('Missing title or start time cancel and try again')
     }
     ApptApiService.postAppt(appt)
@@ -81,13 +84,13 @@ function AddEvent (props) {
         history.push('/map')
         window.location.reload(false)
       })
-      .catch(err => setError(err.message))
+      .catch(err => setError({error: err.error}))
   }
 
   return (
-    <form id="addForm" name="addForm" className='event'>
+    <form id='addForm' name='addForm' className='event'>
       <h2>Add Form</h2>
-      {error && <p>{error}</p>}
+      {error && <p>{error.error}</p>}
       <label htmlFor='title'>Title</label>
       <input
         type='text'
@@ -130,16 +133,17 @@ function AddEvent (props) {
       ></textarea>
       <br />
       <div>
-        <button type='submit' onClick={e => handleAdd(e)}>
-          Check
+        <button className='btn' type='submit' onClick={e => handleAdd(e)}>
+          <FontAwesomeIcon icon={faCheck} />
         </button>
         <button
+          className='btn'
           onClick={e => {
             cancelAdd(e)
             setNewEvent(null)
           }}
         >
-          X
+          <FontAwesomeIcon icon={faTimes} />
         </button>
         <br />
         <br />
