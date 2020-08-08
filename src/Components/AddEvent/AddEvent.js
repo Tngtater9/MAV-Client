@@ -73,8 +73,6 @@ function AddEvent (props) {
         showDate.setDate(apptDate.getDate())
         showDate = moment(showDate).format('L')
         setDate(showDate)
-        console.log('showDate', showDate)
-        console.log('new', newAppt)
         props.changeViewport({
           ...props.currentViewport,
           longitude: Number(newAppt.longitude),

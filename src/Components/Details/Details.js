@@ -21,14 +21,12 @@ function Details () {
       let month = start.getMonth() + 1
       let day = start.getDate()
       let stringStart = String(month) + '/' + String(day) + '/' + String(year)
-      console.log('stringStart det', stringStart)
       let selected = appts.filter(event => {
         let start = new Date(event.start_time)
         let year = start.getFullYear()
         let month = start.getMonth() + 1
         let day = start.getDate()
         let eventStart = String(month) + '/' + String(day) + '/' + String(year)
-        console.log('eventStart det', eventStart)
         return eventStart === stringStart
       })
       selected.sort((a, b) => new Date(a.start_time) - new Date(b.start_time))
