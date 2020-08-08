@@ -31,28 +31,28 @@ function AddEvent (props) {
 
   const handleAdd = e => {
     e.preventDefault()
-    let {
-      title,
-      start_time,
-      end_time = null,
-      description = ''
-    } = e.target.parentNode.parentNode
 
-    start_time = new Date(start_time.value)
+    const addForm = document.getElementById('addForm')
+    let formData = new FormData(addForm)
 
-    if (end_time) {
-      end_time = new Date(end_time.value)
+    let appt = {}
+
+    for (let key of formData.keys()) {
+      appt[key] = formData.get(key)
     }
+    const newStart = new Date(appt.start_time)
+    appt.start_time = newStart
+    const newEnd = new Date(appt.end_time)
+    appt.end_time = newEnd
 
-    const newAppt = {
+      appt = {
       ...newEvent,
-      title: title.value,
-      start_time: start_time,
-      end_time: end_time && end_time,
-      description: description.value
+      ...appt
     }
-    console.log('newAppt', newAppt)
-    ApptApiService.postAppt(newAppt)
+    if(appt.title === '' || appt.start_time === ''){
+      return setError('Missing title or start time cancel and try again')
+    }
+    ApptApiService.postAppt(appt)
       .then(res =>
         !res.ok
           ? res.json().then(e => {
@@ -83,11 +83,11 @@ function AddEvent (props) {
         history.push('/map')
         window.location.reload(false)
       })
-      .catch(err => setError('Missing title or start time cancel and try again'))
+      .catch(err => setError(err.message))
   }
 
   return (
-    <form className='event'>
+    <form id="addForm" name="addForm" className='event'>
       <h2>Add Form</h2>
       {error && <p>{error}</p>}
       <label htmlFor='title'>Title</label>
