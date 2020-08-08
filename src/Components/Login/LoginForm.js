@@ -1,13 +1,12 @@
 import React, { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import './login.css'
 import { UserContext } from '../../Context/UserContext'
 import TokenService from '../../services/TokenService'
 import AuthApiService from '../../services/AuthApiService'
 
 function LoginForm (props) {
-  const history = useHistory()
-  const { setUser, setUserError, userError } = useContext(UserContext)
+  
+  const { userError, setUserError } = useContext(UserContext)
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
@@ -22,9 +21,8 @@ function LoginForm (props) {
         username.value = ''
         password.value = ''
         TokenService.saveAuthToken(res.authToken)
-        setUser(res.visible_name)
-
       })
+      .then(res => props.onLoginSuccess())
       .catch(res => {
         setUserError({ error: res.error })
       })
@@ -32,12 +30,10 @@ function LoginForm (props) {
 
   return (
     <form className="login-form" onSubmit={(ev) => 
-      {handleSubmit(ev); 
-      props.onLoginSuccess(); 
-      history.push('/map')}
+      handleSubmit(ev)
       }>
-      {userError && (<p className="error">{userError}</p>)}
       <h1>Log In</h1>
+      {userError && (<p className="error">{userError.error}</p>)}
       <label htmlFor="username">Username</label>
       <input id="username" name="username" type="text" placeholder="Username"/><br/>
       <label htmlFor="password">Password</label>

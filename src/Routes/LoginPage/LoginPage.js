@@ -1,15 +1,14 @@
 import React from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import LoginForm from '../../Components/Login/LoginForm'
 import UserContextProvider from '../../Context/UserContext'
 
 const LoginPage = () => {
-  const location = useLocation()
   const history = useHistory()
 
   function handleLoginSuccess () {
-    const destination = (location.state || {}).from || '/'
-    history.push(destination)
+    
+    history.push('/map')
   }
 
   return (

@@ -9,6 +9,8 @@ import Header from './Components/Header/Header'
 import EventContextProvider from './Context/EventContext';
 import UserContextProvider from './Context/UserContext'
 import DateContextProvider from './Context/DateContext'
+import PrivateRoute from './Utilis/PrivateRoute'
+import PublicRoute from './Utilis/PublicRoute'
 
 class App extends Component {
 
@@ -20,14 +22,13 @@ class App extends Component {
             <Header/>
             <Switch>
               <Route exact path='/' component={LandingPage}/>
-              <Route path='/signup' component={SignUp}/>
-              <Route path="/login" component={LoginPage}/>
-              <Route path='/map'>
+              <PublicRoute path='/signup' component={SignUp}/>
+              <PublicRoute path="/login" component={LoginPage}/>
+              <PrivateRoute path='/map'>
                 <EventContextProvider>
                   <Map/>
-                </EventContextProvider>
-                
-              </Route>
+                </EventContextProvider>                
+              </PrivateRoute>
             </Switch>
           </DateContextProvider>
         </UserContextProvider>    

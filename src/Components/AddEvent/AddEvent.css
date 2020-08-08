@@ -1,5 +1,6 @@
 .event {
-    color: rgb(235, 0, 243);
+    color: rgb(110, 0, 161);
+    background-color: rgba(31, 31, 31, 0.8);
     font-weight: bold;
     text-shadow: -1px 1px 0 #FFF,
                 1px 1px 0 #FFF,
@@ -16,7 +17,8 @@
 }
 
 .address {
-    color: rgb(235, 0, 243);
+    color: rgb(110, 0, 161);
+    background-color: rgba(31, 31, 31, 0.8);
     font-weight: bold;
     text-shadow: -1px 1px 0 #FFF,
                 1px 1px 0 #FFF,
@@ -33,7 +35,7 @@
 }
 
 .address-btn {
-    color: rgb(235, 0, 243);
+    color: rgb(110, 0, 161);
     font-size: 48px;
     font-weight: bold;
     text-shadow: -1px 1px 0 #FFF,

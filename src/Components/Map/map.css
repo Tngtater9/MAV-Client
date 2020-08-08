@@ -7,14 +7,22 @@
     overflow: hidden;
 }
 
-.marker {
+.marker-button {
     margin: 12px;
     background-color: #404040;
-    color: #ffffff;
+    color: #8400ff;
+    text-shadow: -1px 1px 0 #FFF,
+                1px 1px 0 #FFF,
+                1px -1px 0 #FFF,
+                -1px -1px 0 #FFF;
     padding: 6px;
     font-weight: bold;
     border-radius: 100%;
     cursor: pointer;
+}
+
+.popup{
+    z-index: 1 !important;
 }
 
 .sidebarStyle {

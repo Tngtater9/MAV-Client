@@ -22,7 +22,8 @@
 }
 
 .date {
-    color: rgb(235, 0, 243);
+    color: rgb(110, 0, 161);
+    background-color: rgba(31, 31, 31, 0.8);
     font-weight: bold;
     width: 100%;
     display: flex;
@@ -30,8 +31,8 @@
     align-items: center;
 }
 
-.date > p {
-    color: rgb(235, 0, 243);
+.date > p, label {
+    color: rgb(110, 0, 161);
     text-shadow: -1px 1px 0 #FFF,
             1px 1px 0 #FFF,
             1px -1px 0 #FFF,
@@ -58,12 +59,13 @@
 .header {
     font-size: 72px;
     margin:0;
-    color: rgb(235, 0, 243);
+    width: 100%;
+    color: rgb(110, 0, 161);
     text-shadow: -1px 1px 0 #FFF,
             1px 1px 0 #FFF,
             1px -1px 0 #FFF,
             -1px -1px 0 #FFF;
-    background: rgba(253, 253, 253, 0.8);
+    background-color: rgba(31, 31, 31, 0.8);
     border: none;
     cursor: pointer;
     outline: none;

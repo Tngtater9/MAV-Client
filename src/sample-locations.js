@@ -62,3 +62,7 @@ const PLACES = [
 ]
 
 export default PLACES
+
+
+
+
