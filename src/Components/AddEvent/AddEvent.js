@@ -7,7 +7,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { EventContext } from '../../Context/EventContext'
 import { DateContext } from '../../Context/DateContext'
 import ApptApiService from '../../services/ApptApiService'
-import moment from 'moment-with-locales-es6'
 
 function AddEvent (props) {
   const history = useHistory()
@@ -73,9 +72,11 @@ function AddEvent (props) {
 
         const apptDate = new Date(newAppt.start_time)
         let showDate = new Date(apptDate)
-        showDate.setDate(apptDate.getDate())
-        showDate = moment(showDate).format('L')
-        setDate(showDate)
+        let year = String(showDate.getFullYear())
+        let month = String(showDate.getMonth() + 1)
+        let day = String(showDate.getDate())
+        let stringDate = month + '/' + day + '/' + year
+        setDate(stringDate)
         props.changeViewport({
           ...props.currentViewport,
           longitude: Number(newAppt.longitude),
@@ -84,7 +85,7 @@ function AddEvent (props) {
         history.push('/map')
         window.location.reload(false)
       })
-      .catch(err => setError({error: err.error}))
+      .catch(err => setError({ error: err.error }))
   }
 
   return (
