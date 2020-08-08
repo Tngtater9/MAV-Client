@@ -15,6 +15,13 @@ The API has three endpoints Auth, Users, and Appointments.
 
 This app was created for a mobile auto glass repair service. With MAV the user is able to log in and view appointments for a given day. Numbered markers are used to show what order the appointments happen in. From the main view the user can click on the "+" to start adding an appointment. The first step lets the user search for the address and the second step lets the user fill in details. If the user wants to start over they can click on the new appointment marker, indicated by the "+", and the popup will like to the main screen. To view an existing appointment the user can click on a marker and the popup will show minimal details. To view the full details the user clicks on the "Details..." link in the popup. While viewing the details the user can delete or modify the appointment.
 
+![Main page no appointments](./src/imgs/main.jpg)
+![Search for appointment address](./src/imgs/searchAdd.jpg)
+![Add details to appointment](./src/imgs/addDetails.jpg)
+![Map with one appointment](./src/imgs/mainWappt.jpg)
+![Appointment popup](./src/imgs/popup.jpg)
+![Appointment details](./src/imgs/details.jpg)
+
 ## Technology Used
 
 MAV was created using ReactJS, JavaScript, Mapbox GL JS, and icons were provided by FontAwesome. The API was made with Express and Postgresql 12.
