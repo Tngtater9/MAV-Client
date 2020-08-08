@@ -58,7 +58,7 @@ function AddEvent (props) {
       .then(res =>
         !res.ok
           ? res.json().then(e => {
-              setError(e.message)
+              setError({error: e.error})
             })
           : res.json()
       )
