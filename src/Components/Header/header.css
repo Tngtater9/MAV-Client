@@ -75,7 +75,7 @@
 }
 
 .nav-links {
-    background-color: #FFF;
+    background-color: rgba(31, 31, 31);
     display: flex;
     flex-direction: column;
     z-index: 1 !important;
