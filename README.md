@@ -1,6 +1,24 @@
 # MAV-Client
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+To see the live app click [here](https://mav-client.vercel.app/).
+
+To try MAV without creating an account use username 'demo' and password 'Password1!'
+
+## API documentation
+
+To view the repo for the API used in this app click [here](https://github.com/Tngtater9/mav-server).
+
+The API has three endpoints Auth, Users, and Appointments.
+
+## Summary
+
+This app was created for a mobile auto glass repair service. With MAV the user is able to log in and view appointments for a given day. Numbered markers are used to show what order the appointments happen in. From the main view the user can click on the "+" to start adding an appointment. The first step lets the user search for the address and the second step lets the user fill in details. If the user wants to start over they can click on the new appointment marker, indicated by the "+", and the popup will like to the main screen. To view an existing appointment the user can click on a marker and the popup will show minimal details. To view the full details the user clicks on the "Details..." link in the popup. While viewing the details the user can delete or modify the appointment.
+
+## Technology Used
+
+MAV was created using ReactJS, JavaScript, Mapbox GL JS, and icons were provided by FontAwesome. The API was made with Express and Postgresql 12.
+
 ## Available Scripts
 
 In the project directory, you can run:
