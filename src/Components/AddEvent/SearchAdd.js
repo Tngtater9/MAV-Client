@@ -36,7 +36,7 @@ function Search () {
         description: '',
         userId: user
       }
-      
+
       let uri = `https://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_POSITIONSTACK_KEY}&limit=1&query=${address}&output=json`
 
       fetch(uri)
@@ -60,7 +60,7 @@ function Search () {
     <div>
       {toggle ? (
         <form id="addAddress" name="addAddress" className='address'>
-          {error && <p>{error.error}</p>}
+          {error && <p className="error">{error.error}</p>}
           <label htmlFor='address'>Enter address</label>
           <input
             type='text'

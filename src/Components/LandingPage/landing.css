@@ -1,6 +1,7 @@
 body {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     text-align: center;
+    background-color: rgba(31, 31, 31, 0.8);
 }
 
 .demo {
@@ -14,7 +15,7 @@ body {
 main {
     background-color: rgba(31, 31, 31, 0.8);
     width: 100%;
-    color: rgb(110, 0, 161);
+    color: #FFF;
     display: flex;
     flex-direction: column;
     justify-content: center;

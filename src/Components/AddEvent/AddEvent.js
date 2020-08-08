@@ -91,7 +91,7 @@ function AddEvent (props) {
   return (
     <form id='addForm' name='addForm' className='event'>
       <h2>Add Form</h2>
-      {error && <p>{error.error}</p>}
+      {error && <p className="error">{error.error}</p>}
       <label htmlFor='title'>Title</label>
       <input
         type='text'

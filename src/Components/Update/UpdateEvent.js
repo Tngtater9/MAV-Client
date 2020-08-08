@@ -166,7 +166,7 @@ function UpdateEvent () {
   return (
     <form id='updateForm' name='updateForm' className='event'>
       <h2>Update Form</h2>
-      {error && <p>{error.error}</p>}
+      {error && <p className="error">{error.error}</p>}
       <label htmlFor='title'>Title</label>
       <input
         type='text'
