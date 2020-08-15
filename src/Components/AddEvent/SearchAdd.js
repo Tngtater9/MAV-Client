@@ -2,16 +2,14 @@ import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import './AddEvent.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { EventContext } from '../../Context/EventContext'
-import { UserContext } from '../../Context/UserContext'
 
 function Search () {
   const [toggle, setToggle] = useState(false)
   const [inputAddress, setAddress] = useState('')
   const [error, setError] = useState(null)
   const { setNewEvent } = useContext(EventContext)
-  const { user } = useContext(UserContext)
 
   const history = useHistory()
 
@@ -27,14 +25,7 @@ function Search () {
 
     if (address !== '') {
       newEvent = {
-        longitude: null,
-        latitude: null,
         address: address,
-        title: '',
-        start_time: '',
-        end_time: '',
-        description: '',
-        userId: user
       }
 
       let uri = `https://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_POSITIONSTACK_KEY}&limit=1&query=${address}&output=json`
@@ -77,7 +68,7 @@ function Search () {
         </form>
       ) : (
         <button className='address-btn' onClick={() => setToggle(!toggle)}>
-          +
+          <FontAwesomeIcon icon={faPlus} />
         </button>
       )}
     </div>

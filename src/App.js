@@ -7,7 +7,6 @@ import SignUp from './Components/SignUp/signup'
 import Map from './Components/Map/Map'
 import Header from './Components/Header/Header'
 import EventContextProvider from './Context/EventContext';
-import UserContextProvider from './Context/UserContext'
 import DateContextProvider from './Context/DateContext'
 import PrivateRoute from './Utilis/PrivateRoute'
 import PublicRoute from './Utilis/PublicRoute'
@@ -17,21 +16,19 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        <UserContextProvider>
-          <DateContextProvider>
-            <Header/>
-            <Switch>
-              <Route exact path='/' component={LandingPage}/>
-              <PublicRoute path='/signup' component={SignUp}/>
-              <PublicRoute path="/login" component={LoginPage}/>
-              <PrivateRoute path='/map'>
-                <EventContextProvider>
-                  <Map/>
-                </EventContextProvider>                
-              </PrivateRoute>
-            </Switch>
-          </DateContextProvider>
-        </UserContextProvider>    
+        <DateContextProvider>
+          <Header/>
+          <Switch>
+            <Route exact path='/' component={LandingPage}/>
+            <PublicRoute path='/signup' component={SignUp}/>
+            <PublicRoute path="/login" component={LoginPage}/>
+            <PrivateRoute path='/map'>
+              <EventContextProvider>
+                <Map/>
+              </EventContextProvider>                
+            </PrivateRoute>
+          </Switch>
+        </DateContextProvider>  
       </div>
     )
   }

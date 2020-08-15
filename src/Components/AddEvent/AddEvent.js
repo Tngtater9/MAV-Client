@@ -11,7 +11,6 @@ import ApptApiService from '../../services/ApptApiService'
 function AddEvent (props) {
   const history = useHistory()
   const {
-    selectedEvents,
     setSelectedEvents,
     newEvent,
     setNewEvent
@@ -28,7 +27,7 @@ function AddEvent (props) {
     e.preventDefault()
     setNewEvent(null)
     history.push('/map')
-    window.location.reload(false)
+    
   }
 
   const handleAdd = e => {
@@ -63,7 +62,7 @@ function AddEvent (props) {
           : res.json()
       )
       .then(newAppt => {
-        setSelectedEvents(...selectedEvents, newAppt)
+        setSelectedEvents(PrevState => [...PrevState, newAppt])
         setNewEvent(null)
         setTitle('')
         setStart_time('')
@@ -71,11 +70,10 @@ function AddEvent (props) {
         setDescription('')
 
         const apptDate = new Date(newAppt.start_time)
-        let showDate = new Date(apptDate)
-        let year = String(showDate.getFullYear())
-        let month = String(showDate.getMonth() + 1)
-        let day = String(showDate.getDate())
-        let stringDate = month + '/' + day + '/' + year
+        let year = String(apptDate.getFullYear())
+        let month = String(apptDate.getMonth() + 1)
+        let date = String(apptDate.getDate())
+        let stringDate = month + '/' + date + '/' + year
         setDate(stringDate)
         props.changeViewport({
           ...props.currentViewport,
@@ -83,7 +81,7 @@ function AddEvent (props) {
           latitude: Number(newAppt.latitude)
         })
         history.push('/map')
-        window.location.reload(false)
+        window.location.reload(true)
       })
       .catch(err => setError({ error: err.error }))
   }
@@ -137,13 +135,7 @@ function AddEvent (props) {
         <button className='btn' type='submit' onClick={e => handleAdd(e)}>
           <FontAwesomeIcon icon={faCheck} />
         </button>
-        <button
-          className='btn'
-          onClick={e => {
-            cancelAdd(e)
-            setNewEvent(null)
-          }}
-        >
+        <button className='btn' onClick={e => {cancelAdd(e)}}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <br />

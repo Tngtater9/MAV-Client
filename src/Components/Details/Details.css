@@ -1,4 +1,4 @@
-.details, article {
+article {
     color: #FFF;
     background-color: rgba(31, 31, 31, 0.8);
     display: flex;
@@ -7,8 +7,8 @@
     align-items: flex-end;
     position: fixed;
     z-index: 1;
-    right: 0;
-    bottom: 5%;
+    right: 10%;
+    bottom: 10%;
     width: fit-content;
     height: max-content;
     padding: 6px;

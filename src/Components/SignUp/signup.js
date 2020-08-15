@@ -7,7 +7,7 @@ function SignUp () {
   const [error, setError] = useState(null)
   const history = useHistory()
 
-  const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]/
+  const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&])[\S]/
 
   const validatePassword =  (password) => {
     if (password.length < 8) {

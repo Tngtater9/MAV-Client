@@ -10,8 +10,8 @@ import ApptApiService from '../../services/ApptApiService'
 
 function UpdateEvent () {
   const history = useHistory()
-  let { eventId } = useParams()
-  const { events, setEvents, setSelected, setSelectedEvents } = useContext(
+  let { apptId } = useParams()
+  const { setSelected, setSelectedEvents } = useContext(
     EventContext
   )
   const { setDate } = useContext(DateContext)
@@ -25,8 +25,9 @@ function UpdateEvent () {
 
   useEffect(() => {
     ApptApiService.getAllAppt().then(appts => {
-      const event = appts.find(e => e.id === eventId)
+      const event = appts.find(e => e.id === apptId)
 
+      //Get selected event start time as a string to set Date
       const start = new Date(event.start_time)
       let year = String(start.getFullYear())
       let month = String(start.getMonth() + 1)
@@ -34,6 +35,8 @@ function UpdateEvent () {
       let hour = String(start.getHours())
       let min = String(start.getMinutes())
       let stringStart = month + '/' + day + '/' + year
+      
+      //get event start time as a string compatible with the browser datetime input
       if (month.length === 1) {
         month = '0' + month
       }
@@ -48,6 +51,9 @@ function UpdateEvent () {
       }
       let stringStartWTime =
         year + '-' + month + '-' + day + 'T' + hour + ':' + min
+      event.start_time = stringStartWTime
+      
+      //get event end time as string compatible with browser datetime input
       if (event.end_time !== '') {
         const end = new Date(event.end_time)
         let year = String(end.getFullYear())
@@ -71,6 +77,8 @@ function UpdateEvent () {
           year + '-' + month + '-' + day + 'T' + hour + ':' + min
         event.end_time = stringEndWTime
       }
+
+      //filter for events that also occur on the selected event day
       let selected = appts.filter(event => {
         let start = new Date(event.start_time)
         let year = start.getFullYear()
@@ -80,14 +88,13 @@ function UpdateEvent () {
         return eventStart === stringStart
       })
       selected.sort((a, b) => new Date(a.start_time) - new Date(b.start_time))
-
+      
       setDate(stringStart)
-      setEvents(appts)
       setSelectedEvents(selected)
       setSelected(event)
       setTitle(event.title)
       setAddress(event.address)
-      setStart_time(stringStartWTime)
+      setStart_time(event.start_time)
       setEnd_time(event.end_time)
       setDescription(event.description)
     })
@@ -95,19 +102,25 @@ function UpdateEvent () {
 
   const onUpdate = e => {
     e.preventDefault()
+
+    //get form data
     const updateForm = document.getElementById('updateForm')
     let formData = new FormData(updateForm)
 
     let appt = {}
 
+    //parse form data into object
     for (let key of formData.keys()) {
       appt[key] = formData.get(key)
     }
+
+    
     const newStart = new Date(appt.start_time)
     appt.start_time = newStart
     const newEnd = new Date(appt.end_time)
     appt.end_time = newEnd
 
+    //if new address search for it to add geolocation to appointment and update appointment
     if (appt.address !== '') {
       let uri = `https://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_POSITIONSTACK_KEY}&limit=1&query=${appt.address}&output=json`
       fetch(uri)
@@ -118,10 +131,10 @@ function UpdateEvent () {
             longitude: data.data[0].longitude,
             latitude: data.data[0].latitude
           }
-          ApptApiService.updateAppt(eventId, appt)
+          ApptApiService.updateAppt(apptId, appt)
         })
         .then(() => {
-          const updatedEvents = events.map(e => (e.id === eventId ? appt : e))
+          //set date in header          
           const start = appt.start_time
           let year = start.getFullYear()
           let month = start.getMonth() + 1
@@ -130,17 +143,18 @@ function UpdateEvent () {
             String(month) + '/' + String(day) + '/' + String(year)
 
           setDate(stringStart)
-          setEvents(updatedEvents)
+          setSelectedEvents(selectedEvents => selectedEvents.map(e => (e.id === apptId ? appt : e)))
           setSelected(appt)
-          history.push(`/map/event/${eventId}`)
+          history.push(`/map/appt/${apptId}`)
         })
         .catch(err => {
           setError({error: err.error})
         })
     } else {
-      ApptApiService.updateAppt(eventId, appt)
+      //otherwise just update the appointment
+      ApptApiService.updateAppt(apptId, appt)
         .then(() => {
-          const updatedEvents = events.map(e => (e.id === eventId ? appt : e))
+          //set date in header
           const start = appt.start_time
           let year = start.getFullYear()
           let month = start.getMonth() + 1
@@ -149,9 +163,9 @@ function UpdateEvent () {
             String(month) + '/' + String(day) + '/' + String(year)
 
           setDate(stringStart)
-          setEvents(updatedEvents)
+          setSelectedEvents(selectedEvents => selectedEvents.map(e => (e.id === apptId ? appt : e)))
           setSelected(appt)
-          history.push(`/map/event/${eventId}`)
+          history.push(`/map/appt/${apptId}`)
         })
         .catch(err => {
           setError({error: err.error})

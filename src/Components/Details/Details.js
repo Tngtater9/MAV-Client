@@ -10,15 +10,30 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 function Details () {
-  const { setSelectedEvents, setEvents, selected, setSelected } = useContext(
-    EventContext
-  )
+  const { setSelectedEvents, selected, setSelected } = useContext(EventContext)
   const { setDate } = useContext(DateContext)
-  const { eventId } = useParams()
+  const { apptId } = useParams()
+
+  //format date for display
+  function formatDisplayDate (date) {
+    const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    if(date){
+      let theDate = new Date(date)
+      let showDay = theDate.getUTCDay()
+      let showDate = theDate.getUTCDate()
+      let month = theDate.getUTCMonth()
+      let year = theDate.getUTCFullYear()
+      let time = theDate.toLocaleTimeString('en-US')
+
+      theDate = `${day[showDay]} ${month}/${showDate}/${year} ${time}`
+
+      return theDate
+    }
+  }
 
   useEffect(() => {
     ApptApiService.getAllAppt().then(appts => {
-      const event = appts.find(e => e.id === eventId)
+      const event = appts.find(e => e.id === apptId)
 
       const start = new Date(event.start_time)
       let year = start.getFullYear()
@@ -35,7 +50,6 @@ function Details () {
       })
       selected.sort((a, b) => new Date(a.start_time) - new Date(b.start_time))
       setDate(stringStart)
-      setEvents(appts)
       setSelectedEvents(selected)
       setSelected(event)
     })
@@ -48,17 +62,17 @@ function Details () {
   }
 
   const toEditDetails = () => {
-    history.push(`/map/update/${eventId}`)
+    history.push(`/map/update/${apptId}`)
   }
 
   const toDeleteEvent = () => {
-    history.push(`/map/delete/${eventId}`)
+    history.push(`/map/delete/${apptId}`)
   }
 
   return (
     <div>
       {selected ? (
-        <section className='details'>
+        <article className='details'>
           <button className="btn" onClick={() => closeDetails()}><FontAwesomeIcon icon={faTimesCircle} /></button>
           <div>
             <h1>{selected.title}</h1>
@@ -68,12 +82,12 @@ function Details () {
             </p>
             <p>
               <strong>Start:</strong>
-              {selected.start_time.toString()}
+              {formatDisplayDate(selected.start_time)}
             </p>
             {selected.end_time && (
               <p>
                 <strong>End:</strong>
-                {selected.end_time.toString()}
+                {formatDisplayDate(selected.end_time)}
               </p>
             )}
             {selected.description && (
@@ -87,7 +101,7 @@ function Details () {
             <button className="btn" onClick={() => toDeleteEvent()}><FontAwesomeIcon icon={faTrashAlt} /></button>
             <button className="btn" onClick={() => toEditDetails()}><FontAwesomeIcon icon={faEdit} /></button>
           </div>
-        </section>
+        </article>
       ) : null}
     </div>
   )

@@ -2,14 +2,15 @@ import React, { useState, useContext } from 'react'
 import { Link, Switch, Route, useHistory } from 'react-router-dom'
 import './header.css'
 import TokenService from '../../services/TokenService'
-import { UserContext } from '../../Context/UserContext'
 import { DateContext } from '../../Context/DateContext'
 
 function handleLogoutClick () {
+  console.log('Ihaveloggedout')
   TokenService.clearAuthToken()
 }
 
 function formatDate (date) {
+  //format day to be MM/DD/YYYY from YYYY-MM-DD
   const result = []
   const separate = date.split('-')
 
@@ -33,10 +34,13 @@ function formatDate (date) {
 }
 
 const Header = () => {
-  const { user } = useContext(UserContext)
-  const { date, setDate, pickerDate, setPickerDate } = useContext(DateContext)
+  const { date, setDate } = useContext(DateContext)
   const [toggle, setToggle] = useState(false)
   const history = useHistory()
+  const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+  const UTCday = new Date(date).getUTCDay()
+
 
   return (
     <header className='App-header'>
@@ -53,18 +57,11 @@ const Header = () => {
               to='/map'
               onClick={() => {
                 history.push('/map')
-                window.location.reload(false)
               }}
             >
               View today's appointments
             </Link>
-            <Link
-              onClick={() => {
-                handleLogoutClick()
-                setToggle(false)
-              }}
-              to='/'
-            >
+            <Link to='/' onClick={() => {handleLogoutClick();setToggle(false)}}>
               Logout
             </Link>
           </nav>
@@ -82,28 +79,22 @@ const Header = () => {
           )}
         </Route>
         <Route path='/map'>
-          <form className='date'>
-            <p>{date}</p>
-            <div className='date-ctrl'>
-              <label htmlFor='date'>Enter date to view:</label>
+          <form className='date'>  
+              {/* Conditionally render name of day or instructions  */}
+              <label htmlFor='date'>{date ? day[UTCday] : 'Enter date to view:'}</label><br/>
               <input
                 type='date'
                 id='date'
                 name='date'
                 className='date'
-                value={pickerDate}
                 onChange={e => {
-                  setDate(formatDate(e.target.value).join(''))
-                  setPickerDate(e.target.value)
+                  setDate(formatDate(e.target.value).join(''));
                 }}
               />
-            </div>
           </form>
         </Route>
         <Route path='/signup'>
-          {TokenService.hasAuthToken() ? (
-            <Link to='/map'>`Hello, ${user}`</Link>
-          ) : (
+          {!TokenService.hasAuthToken() && (
             <div className='login'>
               <Link to='/signup'>Sign Up</Link>
               <Link to='/login'>Log in</Link>
@@ -111,9 +102,7 @@ const Header = () => {
           )}
         </Route>
         <Route path='/login'>
-          {TokenService.hasAuthToken() ? (
-            <Link to='/map'>`Hello, ${user}`</Link>
-          ) : (
+          {!TokenService.hasAuthToken() && (
             <div className='login'>
               <Link to='/signup'>Sign Up</Link>
               <Link to='/login'>Log in</Link>

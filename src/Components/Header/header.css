@@ -23,7 +23,7 @@
     height: 28px;
 }
 
-.date {
+/* .date {
     color: rgb(110, 0, 161);
     background-color: rgba(31, 31, 31, 0.8);
     font-weight: bold;
@@ -41,19 +41,19 @@
             -1px -1px 0 #FFF;
     font-weight: bold;
     font-size: 18px;
-}
+} */
 
 .date-ctrl > input {
     background-color: darkgrey;
-    width: 100%;
+    width: 10%;
     padding: 0;
     cursor: pointer;
 }
 
-.date-ctrl {
+/* .date-ctrl {
     display: flex;
     justify-content: flex-end;
-}
+} */
 
 .hidden {
     display: none;
