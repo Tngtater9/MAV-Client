@@ -13,7 +13,6 @@ function Confirmation () {
   const { setSelectedEvents } = useContext(EventContext)
 
   const acceptDelete = () => {
-
     ApptApiService.deleteAppt(apptId).then(() => {
       setSelectedEvents(PrevState => PrevState.filter(e => e.id !== apptId))
       history.push('/map')

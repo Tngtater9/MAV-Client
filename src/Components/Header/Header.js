@@ -45,54 +45,20 @@ const Header = () => {
   return (
     <header className='App-header'>
       <div>
-        <button onClick={() => setToggle(!toggle)} className='header'>
-          MAV
-        </button>
-        {TokenService.hasAuthToken() ? (
-          <nav className={toggle ? 'nav-links' : 'hidden'}>
-            <Link to='/' onClick={() => setToggle(false)}>
-              About
-            </Link>
-            <Link
-              to='/map'
-              onClick={() => {
-                history.push('/map')
-              }}
-            >
-              View today's appointments
-            </Link>
-            <Link to='/' onClick={() => {handleLogoutClick();setToggle(false)}}>
-              Logout
-            </Link>
-          </nav>
-        ) : null}
+        <button onClick={() => setToggle(!toggle)} className='header'>MAV</button>
+        {TokenService.hasAuthToken() && (
+        <nav className={toggle ? 'nav-links' : 'hidden'}>
+          <Link to='/' onClick={() => setToggle(false)}>About</Link>
+          <Link to='/map' onClick={() => { history.push('/map') }}>
+            View today's appointments
+          </Link>
+          <Link to='/' onClick={() => {handleLogoutClick();setToggle(false)}}>
+            Logout
+          </Link>
+        </nav>
+        )}
       </div>
       <Switch>
-        <Route exact path='/'>
-          {TokenService.hasAuthToken() ? (
-            <Link to='/map'>Go to viewer</Link>
-          ) : (
-            <div className='login'>
-              <Link to='/signup'>Sign Up</Link>
-              <Link to='/login'>Log in</Link>
-            </div>
-          )}
-        </Route>
-        <Route path='/map'>
-          <form className='date'>  
-              {/* Conditionally render name of day or instructions  */}
-              <label htmlFor='date'>{date ? day[UTCday] : 'Enter date to view:'}</label><br/>
-              <input
-                type='date'
-                id='date'
-                name='date'
-                className='date'
-                onChange={e => {
-                  setDate(formatDate(e.target.value).join(''));
-                }}
-              />
-          </form>
-        </Route>
         <Route path='/signup'>
           {!TokenService.hasAuthToken() && (
             <div className='login'>
@@ -108,6 +74,29 @@ const Header = () => {
               <Link to='/login'>Log in</Link>
             </div>
           )}
+        </Route>
+        <Route exact path='/'>
+          {TokenService.hasAuthToken() ? (
+          <Link to='/map'>Go to viewer</Link>
+          ) : (
+          <div className='login'>
+            <Link to='/signup'>Sign Up</Link>
+            <Link to='/login'>Log in</Link>
+          </div>)}
+        </Route>
+        <Route path='/map'>
+          <form className='date'>  
+              {/* Conditionally render name of day or instructions  */}
+              <label htmlFor='date'>{date ? day[UTCday] : 'Enter date to view:'}</label><br/>
+              <input
+                type='date'
+                id='date'
+                name='date'
+                className='date'
+                onChange={e => {
+                  setDate(formatDate(e.target.value).join(''));
+              }}/>
+          </form>
         </Route>
       </Switch>
     </header>
