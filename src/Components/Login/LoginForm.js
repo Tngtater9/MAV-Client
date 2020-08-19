@@ -7,6 +7,18 @@ function LoginForm (props) {
   
   const [error, setError] = useState(null)
 
+  const handleDemo = () => {
+    AuthApiService.postLogin({
+      username: 'demo',
+      password: 'Password1!'
+    })
+      .then(res => TokenService.saveAuthToken(res.authToken))
+      .then(() => props.onLoginSuccess())
+      .catch(res => {
+        setError({ error: res.error })
+      })
+  }
+
   const handleSubmit = (ev) => {
     ev.preventDefault()
     setError({ error: null })
@@ -31,6 +43,8 @@ function LoginForm (props) {
     <form className="login-form" onSubmit={(ev) => 
       handleSubmit(ev)
       }>
+      <p>Not ready to sign up?</p><br/>
+      <button onClick={() => handleDemo()}>Try the demo</button>
       <h1>Log In</h1>
       {error && (<p className="error">{error.error}</p>)}
       <label htmlFor="username">Username</label>
